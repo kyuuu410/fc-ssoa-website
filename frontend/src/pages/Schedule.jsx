@@ -40,7 +40,7 @@ function Schedule() {
 
   const fetchTeamStats = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/team/stats')
+      const response = await axios.get('https://fc-ssoa-backend.onrender.com/api/team/stats')
       setTeamStats(response.data)
     } catch (err) {
       console.error('Failed to fetch team stats:', err)
@@ -49,7 +49,7 @@ function Schedule() {
 
   const fetchMatches = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/matches')
+      const response = await axios.get('https://fc-ssoa-backend.onrender.com/api/matches')
       const transformedMatches = response.data.map(match => {
         const matchDateTime = new Date(match.match_date)
         const date = matchDateTime.toISOString().split('T')[0]
@@ -96,7 +96,7 @@ function Schedule() {
 
   const fetchPlayers = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/matches/players-for-stats')
+      const response = await axios.get('https://fc-ssoa-backend.onrender.com/api/matches/players-for-stats')
       setPlayers(response.data)
     } catch (err) {
       console.error('Failed to fetch players:', err)
@@ -180,9 +180,9 @@ function Schedule() {
 
     try {
       if (editingMatch) {
-        await axios.put(`http://localhost:8080/api/matches/${editingMatch.id}`, payload)
+        await axios.put(`https://fc-ssoa-backend.onrender.com/api/matches/${editingMatch.id}`, payload)
       } else {
-        await axios.post('http://localhost:8080/api/matches', payload)
+        await axios.post('https://fc-ssoa-backend.onrender.com/api/matches', payload)
       }
       closeModal()
       fetchMatches()
@@ -202,7 +202,7 @@ function Schedule() {
     }
 
     try {
-      await axios.post(`http://localhost:8080/api/matches/${completingMatch.id}/complete`, payload)
+      await axios.post(`https://fc-ssoa-backend.onrender.com/api/matches/${completingMatch.id}/complete`, payload)
       closeCompleteModal()
       fetchMatches()
       alert('경기가 완료 처리되었고 선수 통계가 업데이트되었습니다!')
@@ -215,7 +215,7 @@ function Schedule() {
     if (!confirm('정말 이 경기를 삭제하시겠습니까?')) return
 
     try {
-      await axios.delete(`http://localhost:8080/api/matches/${matchId}`)
+      await axios.delete(`https://fc-ssoa-backend.onrender.com/api/matches/${matchId}`)
       fetchMatches()
     } catch (err) {
       alert('삭제에 실패했습니다: ' + (err.response?.data?.detail || err.message))

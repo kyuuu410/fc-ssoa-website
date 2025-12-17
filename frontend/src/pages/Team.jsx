@@ -16,7 +16,7 @@ function Team() {
 
   const fetchTeamMembers = async () => {
     try {
-      const response = await axios.get('http://localhost:8080/api/players')
+      const response = await axios.get('https://fc-ssoa-backend.onrender.com/api/players')
       // Transform backend data to match frontend expectations
       const positionMap = {
         'goalkeeper': '골키퍼',

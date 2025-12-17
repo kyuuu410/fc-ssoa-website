@@ -15,7 +15,7 @@ function Home() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/team/stats')
+        const response = await axios.get('https://fc-ssoa-backend.onrender.com/api/team/stats')
         setTeamStats(response.data)
       } catch (err) {
         console.error('Failed to fetch team stats:', err)
