@@ -12,11 +12,7 @@ app = FastAPI(
 # CORS configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173",
-        "http://localhost:3000"
-        "https://fc-ssoa-frontend.onrender.com"
-    ],
+    allow_origins=["*"],  # 모든 도메인 허용
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
