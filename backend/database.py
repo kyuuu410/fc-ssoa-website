@@ -44,6 +44,16 @@ def init_sqlite_db():
         )
     ''')
     
+    # Migration: Add home_away column if it doesn't exist
+    try:
+        cursor.execute("SELECT home_away FROM matches LIMIT 1")
+    except sqlite3.OperationalError:
+        # Column doesn't exist, add it
+        print("Adding home_away column to matches table...")
+        cursor.execute("ALTER TABLE matches ADD COLUMN home_away TEXT DEFAULT 'home'")
+        conn.commit()
+        print("Migration completed!")
+    
     # Create announcements table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS announcements (
