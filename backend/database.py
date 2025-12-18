@@ -33,6 +33,7 @@ def init_sqlite_db():
             match_date TEXT NOT NULL,
             opponent TEXT NOT NULL,
             location TEXT,
+            home_away TEXT DEFAULT 'home',
             status TEXT DEFAULT 'scheduled',
             fc_ssoa_score INTEGER,
             opponent_score INTEGER,
@@ -309,15 +310,16 @@ def create_match(match_data: dict) -> dict:
     cursor = conn.cursor()
     
     cursor.execute('''
-        INSERT INTO matches (id, match_date, opponent, location, status, 
+        INSERT INTO matches (id, match_date, opponent, location, home_away, status, 
                            fc_ssoa_score, opponent_score, notes, goal_scorers, 
                            assist_providers, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ''', (
         match_id,
         match_data.get('match_date'),
         match_data.get('opponent'),
         match_data.get('location'),
+        match_data.get('home_away', 'home'),
         match_data.get('status', 'scheduled'),
         match_data.get('fc_ssoa_score'),
         match_data.get('opponent_score'),
@@ -344,7 +346,7 @@ def update_match(match_id: str, match_data: dict) -> Optional[dict]:
     update_fields = []
     values = []
     
-    for key in ['match_date', 'opponent', 'location', 'status', 
+    for key in ['match_date', 'opponent', 'location', 'home_away', 'status', 
                 'fc_ssoa_score', 'opponent_score', 'notes']:
         if key in match_data and match_data[key] is not None:
             update_fields.append(f"{key} = ?")
